@@ -64,6 +64,14 @@ li { display: list-item; }
   font-family: 'Space Grotesk', sans-serif;
   font-size: 1.1rem;
   letter-spacing: 0.05em;
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+}
+
+.nav-brand svg {
+  width: 28px;
+  height: 28px;
 }
 
 .nav-links {
