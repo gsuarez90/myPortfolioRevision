@@ -11,6 +11,7 @@ gsuarez90.github.io/resources/images/*.pdf
 
 # Scratch files
 infra/dynamo-delete-key.json
+interview-talking-points.md
 
 # Dev screenshots
 *.png
