@@ -25,8 +25,8 @@ ACM_CERT_ARN="arn:aws:acm:us-east-1:648029811785:certificate/db645a21-f488-4d42-
 # ── PATHS (relative to this script) ──────────────────────────────────────────
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 LAMBDA_DIR="$SCRIPT_DIR/../lambda"
-STATIC_DIR="$SCRIPT_DIR/../gsuarez90.github.io"
-RESUME_PDF="$STATIC_DIR/resources/images/gsuarez5.14.26.pdf"
+STATIC_DIR="$SCRIPT_DIR/../frontend"
+RESUME_PDF="$STATIC_DIR/resources/images/resume.pdf"
 
 # ── PREFLIGHT ─────────────────────────────────────────────────────────────────
 if [[ -z "$ACM_CERT_ARN" ]]; then
