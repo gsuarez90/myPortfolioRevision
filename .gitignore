@@ -1,0 +1,24 @@
+# Dependencies
+lambda/node_modules/
+
+# Build artifacts
+infra/lambda.zip
+infra/cf-dist-config.json
+
+# Resume PDFs — stored in S3 private, never in source control
+frontend/resources/images/*.pdf
+gsuarez90.github.io/resources/images/*.pdf
+
+# Scratch files
+infra/dynamo-delete-key.json
+
+# Dev screenshots
+*.png
+
+# Claude Code / Playwright local tool data
+.claude/
+.playwright-mcp/
+CLAUDE.md
+
+# Markdown preview tooling
+markdown-preview.css

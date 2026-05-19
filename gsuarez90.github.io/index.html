@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>George J. Suarez</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Mukta+Vaani:wght@300;400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="./resources/index.css">
+</head>
+
+<body>
+
+<!--script src="javascrill.js"></script-->
+
+<!-- ===================== NAV ===================== -->
+<nav id="main-nav">
+    <div class="nav-inner">
+        <span class="nav-brand">GS</span>
+        <ul class="nav-links">
+            <li><a href="#hero">About</a></li>
+            <li><a href="#experience">Experience</a></li>
+            <li><a href="#projects">Projects</a></li>
+            <li><a href="#contact">Contact</a></li>
+            <li><a class="nav-resume" data-toggle="modal" data-target="#myModal">Resume</a></li>
+        </ul>
+    </div>
+</nav>
+
+<!-- ===================== MODAL ===================== -->
+<div class="modal" id="myModal" style="display:none;" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content modal-dark">
+            <div class="modal-header">
+                <h4 class="modal-title">Request Resume</h4>
+                <button type="button" class="close" data-dismiss="modal">×</button>
+            </div>
+            <div class="modal-body">
+                <p class="modal-sub">Enter your email and I'll send you a download link.</p>
+                <div id="modal-status" class="mb-2" style="display:none;"></div>
+                <div class="input-group">
+                    <input type="email" id="resume-email" class="form-control input-dark" placeholder="you@company.com">
+                    <div class="input-group-append">
+                        <button id="resume-submit" class="btn btn-accent" type="button">Send Link</button>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ===================== HERO ===================== -->
+<section id="hero">
+    <div class="hero-inner">
+        <h1 id="name">George J. Suarez</h1>
+        <p class="tagline">AWS Solutions Architect &nbsp;·&nbsp; Production Software Developer</p>
+        <div class="skill-badges">
+            <span class="badge-pill">Python</span>
+            <span class="badge-pill">C# · .NET</span>
+            <span class="badge-pill">FastAPI</span>
+            <span class="badge-pill">Lambda</span>
+            <span class="badge-pill">API Gateway</span>
+            <span class="badge-pill">DynamoDB</span>
+            <span class="badge-pill">CloudFront</span>
+            <span class="badge-pill">S3</span>
+            <span class="badge-pill">SES</span>
+        </div>
+        <p class="bio">
+            AWS Certified Solutions Architect Associate with 4+ years building, deploying, and maintaining
+            production software in safety-critical, regulated environments. Strong Python and C# background
+            with hands-on experience shipping code that real systems depend on. Currently seeking software
+            engineering and cloud architecture roles.
+        </p>
+        <button class="btn-cta" data-toggle="modal" data-target="#myModal">Request Resume</button>
+    </div>
+</section>
+
+<script>
+function setGlide(el) {
+    el.classList.add("glide");
+    return el;
+}
+setGlide(document.getElementById("name"));
+</script>
+
+<!-- ===================== EXPERIENCE ===================== -->
+<section id="experience">
+    <div class="container">
+        <h2 class="section-title">Experience</h2>
+        <div class="exp-card">
+            <div class="exp-header">
+                <div>
+                    <span class="exp-role">Controls Software Developer</span>
+                    <span class="exp-org">U.S. Space Force &nbsp;·&nbsp; Edwards AFB, CA</span>
+                </div>
+                <span class="exp-dates">Nov 2021 – Dec 2025</span>
+            </div>
+            <ul class="exp-bullets">
+                <li>Shipped and maintained production software in a safety-critical environment — built a strong instinct for balancing speed and reliability under operational pressure</li>
+                <li>Developed Python automation scripts for data processing and transformation, reducing configuration errors by 50% across active test campaigns</li>
+                <li>Built a C# application automating control sequence generation from engineering inputs, replacing a fully manual process and reducing setup time by 40%</li>
+                <li>Built C# interop libraries bridging legacy native interfaces to modern .NET 8.0 applications, enabling reliable data exchange between systems with sparse documentation</li>
+            </ul>
+        </div>
+    </div>
+</section>
+
+<!-- ===================== PROJECTS ===================== -->
+<section id="projects">
+    <div class="container">
+        <h2 class="section-title">Projects</h2>
+        <div class="project-grid">
+
+            <!-- Card 1: This site -->
+            <div class="project-card featured">
+                <div class="card-badges">
+                    <span class="badge-tech">CloudFront</span>
+                    <span class="badge-tech">S3</span>
+                    <span class="badge-tech">Lambda</span>
+                    <span class="badge-tech">API Gateway</span>
+                    <span class="badge-tech">DynamoDB</span>
+                    <span class="badge-tech">SES</span>
+                    <span class="badge-tech">ACM</span>
+                </div>
+                <h3 class="card-title">gsuarez.dev — This Portfolio Site</h3>
+                <ul class="card-bullets">
+                    <li>Serverless resume-request pipeline: visitor submits email → Lambda validates and writes a single-use token to DynamoDB → SES delivers the download link → pre-signed S3 URL serves the PDF</li>
+                    <li>CloudFront with two origin behaviors — static files from a private S3 bucket (OAC) and API routes forwarded to HTTP API Gateway</li>
+                    <li>All AWS resources provisioned via CLI for reproducibility; custom domain via ACM + Porkbun DNS</li>
+                </ul>
+                <span class="card-footer-note">Live — you're on it</span>
+            </div>
+
+            <!-- Card 2: AI Coding Trainer -->
+            <div class="project-card">
+                <div class="card-badges">
+                    <span class="badge-tech">Python</span>
+                    <span class="badge-tech">FastAPI</span>
+                    <span class="badge-tech">Anthropic API</span>
+                </div>
+                <h3 class="card-title">AI-Powered Coding Trainer</h3>
+                <ul class="card-bullets">
+                    <li>Full-stack web app that dynamically generates coding challenges across 5 languages and 3 difficulty levels via the Anthropic API</li>
+                    <li>Structured prompt engineering layer produces consistent JSON challenge responses; API key auth and environment-based secrets management</li>
+                    <li>Published to GitHub as an open-source, fork-friendly project</li>
+                </ul>
+                <a href="https://github.com/gsuarez90" target="_blank" class="card-link">GitHub ↗</a>
+            </div>
+
+            <!-- Card 3: Legacy System Integration -->
+            <div class="project-card">
+                <div class="card-badges">
+                    <span class="badge-tech">C#</span>
+                    <span class="badge-tech">.NET 8.0</span>
+                    <span class="badge-tech">Ghidra</span>
+                    <span class="badge-tech">P/Invoke</span>
+                </div>
+                <h3 class="card-title">Legacy System Integration — C# Interop Suite</h3>
+                <ul class="card-bullets">
+                    <li>Tasked with integrating undocumented 64-bit native systems into a modern .NET environment with sparse reference material</li>
+                    <li>Used Ghidra and systematic reverse engineering to infer method signatures and data layouts from live binaries</li>
+                    <li>Delivered three production-ready .NET 8.0 P/Invoke libraries validated against live hardware</li>
+                </ul>
+                <span class="card-link-muted">Government repository — not publicly available</span>
+            </div>
+
+            <!-- Card 4: Placeholder -->
+            <div class="project-card placeholder-card">
+                <h3 class="card-title">Project Coming Soon</h3>
+                <p class="card-placeholder-sub">Stay tuned</p>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<!-- ===================== CONTACT ===================== -->
+<section id="contact">
+    <div class="container">
+        <div class="footer-inner">
+            <p class="footer-copy">George J. Suarez &copy; 2026</p>
+            <div class="footer-icons">
+                <a href="https://github.com/gsuarez90" target="_blank" class="fa fa-github-square"></a>
+                <a href="mailto:george.suarez.2@outlook.com" target="_blank" class="fa fa-envelope"></a>
+                <a href="https://www.linkedin.com/in/george-suarez30/" target="_blank" class="fa fa-linkedin"></a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- jQuery, Popper, Bootstrap JS -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
+
+<script>
+    const API_BASE = 'https://gsuarez.dev';
+
+    document.getElementById('resume-submit').addEventListener('click', async function () {
+        const emailInput = document.getElementById('resume-email');
+        const statusEl   = document.getElementById('modal-status');
+        const email      = emailInput.value.trim();
+
+        statusEl.style.display = 'none';
+        statusEl.className = 'mb-2';
+
+        if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+            statusEl.textContent = 'Please enter a valid email address.';
+            statusEl.classList.add('text-danger');
+            statusEl.style.display = 'block';
+            return;
+        }
+
+        this.disabled    = true;
+        this.textContent = 'Sending…';
+
+        try {
+            const res = await fetch(API_BASE + '/api/request-resume', {
+                method:  'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body:    JSON.stringify({ email })
+            });
+
+            if (res.ok) {
+                statusEl.textContent = 'Check your inbox for the download link.';
+                statusEl.classList.add('text-success');
+                emailInput.value = '';
+            } else if (res.status === 429) {
+                statusEl.textContent = 'A link was already sent to this address. Please check your inbox.';
+                statusEl.classList.add('text-warning');
+            } else {
+                statusEl.textContent = 'Something went wrong. Please try again.';
+                statusEl.classList.add('text-danger');
+            }
+        } catch (e) {
+            statusEl.textContent = 'Something went wrong. Please try again.';
+            statusEl.classList.add('text-danger');
+        }
+
+        statusEl.style.display  = 'block';
+        this.disabled            = false;
+        this.textContent         = 'Send Link';
+    });
+
+    $('#myModal').on('show.bs.modal', function () {
+        document.getElementById('resume-email').value = '';
+        const statusEl = document.getElementById('modal-status');
+        statusEl.style.display = 'none';
+        statusEl.className = 'mb-2';
+    });
+</script>
+
+</body>
+</html>
