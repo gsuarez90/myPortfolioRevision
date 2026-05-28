@@ -12,7 +12,7 @@
     {
       "Effect": "Allow",
       "Action": "cloudfront:CreateInvalidation",
-      "Resource": "arn:aws:cloudfront::648029811785:distribution/E1EUCNRSBSNWEG"
+      "Resource": "arn:aws:cloudfront::ACCOUNT_ID:distribution/DIST_ID"
     }
   ]
 }

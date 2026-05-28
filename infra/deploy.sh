@@ -20,7 +20,7 @@ RESUME_KEY="private/resume.pdf"
 
 # ACM certificate ARN — must be in us-east-1 for CloudFront.
 # Find it in: ACM console → us-east-1 → Certificates → gsuarez.dev
-ACM_CERT_ARN="arn:aws:acm:us-east-1:648029811785:certificate/db645a21-f488-4d42-8307-f027c31f787c"   # REQUIRED — paste ARN here before running
+ACM_CERT_ARN=""   # REQUIRED — paste your ACM cert ARN here before running (must be in us-east-1)
 
 # ── PATHS (relative to this script) ──────────────────────────────────────────
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
@@ -128,8 +128,8 @@ OAC_ID=$(aws cloudfront list-origin-access-controls \
 # ─────────────────────────────────────────────────────────────────────────────
 echo "==> [7/9] CloudFront distribution — skipping (already exists)"
 
-DIST_ID="E1EUCNRSBSNWEG"
-DIST_DOMAIN="d1qht8g7a9gjq4.cloudfront.net"
+DIST_ID=""       # paste your CloudFront distribution ID here
+DIST_DOMAIN=""   # paste your CloudFront domain (e.g. xxxx.cloudfront.net) here
 
 # ─────────────────────────────────────────────────────────────────────────────
 # STEP 8 — S3 BUCKET POLICY (grants CloudFront OAC read access)
