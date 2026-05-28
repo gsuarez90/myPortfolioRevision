@@ -1,20 +1,30 @@
 #!/usr/bin/env bash
-# Syncs the frontend folder to S3 and invalidates the CloudFront cache.
+# Builds the frontend and syncs it to S3, then invalidates the CloudFront cache.
 # Run from Git Bash: bash infra/deploy-frontend.sh
 set -euo pipefail
 
 BUCKET_NAME="gsuarez-portfolio"
-DIST_ID="E1EUCNRSBSNWEG"
+DIST_ID=""       # paste your CloudFront distribution ID here
 RESUME_KEY="private/resume.pdf"
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 FRONTEND_DIR="$SCRIPT_DIR/../frontend"
 RESUME_PDF="$FRONTEND_DIR/resources/images/resume.pdf"
 
-echo "==> Syncing static files to S3..."
-aws s3 sync "$FRONTEND_DIR" "s3://${BUCKET_NAME}" \
-  --exclude ".git/*" \
-  --exclude "resources/images/*.pdf" \
+if [[ -z "$DIST_ID" ]]; then
+  echo "ERROR: DIST_ID is not set. Paste your CloudFront distribution ID at the top of this script."
+  exit 1
+fi
+
+echo "==> Building frontend..."
+cd "$FRONTEND_DIR"
+npm install --silent
+npm run build
+
+cd "$SCRIPT_DIR"
+
+echo "==> Syncing build output to S3..."
+aws s3 sync "$FRONTEND_DIR/dist" "s3://${BUCKET_NAME}" \
   --delete
 
 echo "==> Uploading resume to private prefix..."

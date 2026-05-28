@@ -1,5 +1,9 @@
 # Dependencies
 lambda/node_modules/
+frontend/node_modules/
+
+# Build output
+frontend/dist/
 
 # Build artifacts
 infra/lambda.zip

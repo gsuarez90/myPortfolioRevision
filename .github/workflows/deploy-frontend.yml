@@ -16,6 +16,21 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: 'npm'
+          cache-dependency-path: frontend/package-lock.json
+
+      - name: Install dependencies
+        run: npm install
+        working-directory: frontend
+
+      - name: Build frontend
+        run: npm run build
+        working-directory: frontend
+
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v4
         with:
@@ -23,14 +38,13 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: us-east-1
 
-      - name: Sync frontend to S3
+      - name: Sync build output to S3
         run: |
-          aws s3 sync ./frontend s3://gsuarez-portfolio \
-            --exclude "resources/images/*.pdf" \
+          aws s3 sync ./frontend/dist s3://gsuarez-portfolio \
             --delete
 
       - name: Invalidate CloudFront cache
         run: |
           aws cloudfront create-invalidation \
-            --distribution-id E1EUCNRSBSNWEG \
+            --distribution-id ${{ secrets.CLOUDFRONT_DIST_ID }} \
             --paths "/*"
