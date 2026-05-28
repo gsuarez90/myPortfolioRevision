@@ -13,10 +13,10 @@ Browser
   │
   ▼
 CloudFront (CDN + HTTPS)
-  ├── /api/*  ──────────────────► API Gateway (HTTP API)
+  ├── /api/*  ──────────────────► API Gateway (HTTP API v2)
   │                                    │
   │                                    ▼
-  │                               Lambda (Node.js 24)
+  │                               Lambda (Node.js 24, ESM)
   │                               ├── POST /api/request-resume
   │                               │     ├── DynamoDB (dedup + token)
   │                               │     └── SES (send email)
@@ -24,7 +24,7 @@ CloudFront (CDN + HTTPS)
   │                                     ├── DynamoDB (delete token)
   │                                     └── S3 pre-signed URL → 302
   │
-  └── /*  ────────────────────────► S3 (static site, OAC)
+  └── /*  ────────────────────────► S3 (private bucket, OAC)
 ```
 
 ## Resume Request Flow
@@ -38,6 +38,7 @@ CloudFront (CDN + HTTPS)
 
 | Layer | Service |
 |---|---|
+| Frontend | React 19 + Vite 8 + Mantine 7 |
 | CDN / HTTPS | CloudFront |
 | Static hosting | S3 (private bucket, OAC) |
 | API | API Gateway HTTP API (v2) |
@@ -50,21 +51,57 @@ CloudFront (CDN + HTTPS)
 ## Repo Structure
 
 ```
-├── frontend/          # Static site (HTML, CSS)
-├── lambda/            # Lambda function source (index.mjs)
-│   ├── index.mjs
+├── frontend/
+│   ├── src/
+│   │   ├── components/    # Nav, Hero, Experience, Projects, ResumeModal, Footer
+│   │   ├── App.jsx
+│   │   ├── main.jsx
+│   │   └── index.css
+│   ├── index.html         # Vite entry point
+│   ├── vite.config.js
+│   └── package.json
+├── lambda/
+│   ├── index.mjs          # Lambda handler (POST + GET routes)
 │   └── package.json
 └── infra/
-    ├── deploy.sh      # Full provisioning script (AWS CLI)
-    └── lambda-policy.json
+    ├── deploy.sh           # Full provisioning script (AWS CLI, one-time)
+    ├── deploy-frontend.sh  # Build + S3 sync + CloudFront invalidation
+    ├── lambda-policy.json  # IAM policy template for Lambda execution role
+    └── deployer-policy.json # IAM policy template for CI/CD user
 ```
+
+## Local Development
+
+```bash
+cd frontend
+npm install
+npm run dev       # starts Vite dev server at http://localhost:5173
+```
+
+The resume form points to `https://gsuarez.dev` even locally. Change `API_BASE` in `ResumeModal.jsx` to test against a different endpoint.
 
 ## Deployment
 
-Provisioned via `infra/deploy.sh` (Bash, AWS CLI). Run from Git Bash on Windows or any POSIX shell.
-
+**Frontend** (build + sync to S3 + invalidate CloudFront):
 ```bash
 bash infra/deploy.sh
 ```
 
-The script provisions: S3, DynamoDB, IAM role + policy, Lambda, API Gateway, CloudFront OAC, CloudFront distribution, and uploads all static assets.
+Fill in `DIST_ID` at the top of the script before running.
+
+**CI/CD** — GitHub Actions automatically builds and deploys on push to `main` when `frontend/**` changes. Requires three repository secrets: `AWS_ACCESS_KEY_ID`, `AWS_SECRET_ACCESS_KEY`, `CLOUDFRONT_DIST_ID`.
+
+**Lambda** — package and deploy manually:
+```bash
+cd lambda && npm install
+zip -r ../infra/lambda.zip .
+aws lambda update-function-code --function-name resume-handler \
+  --zip-file fileb://../infra/lambda.zip --region us-east-1
+```
+
+**Full infrastructure reprovision** (one-time, idempotent for active steps):
+```bash
+bash infra/deploy.sh
+```
+
+Fill in `ACM_CERT_ARN` at the top before running.
